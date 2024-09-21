@@ -30,7 +30,6 @@ async function handleShortedURl(req, res) {
 async function handleURlClicks(req, res) {
     const urlID = req.params.urlID;
     const entry2 = await URL.findOne({ ShortId: urlID })
-    console.log("dwdcwewecwecwecwec")
     res.json({ Totallicks: entry2.visitHistory.length , analytics:entry2.visitHistory })
 }
 
