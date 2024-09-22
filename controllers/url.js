@@ -5,7 +5,6 @@ const generateShortId = require('ssid');
 async function handleUrlPost(req, res) {
     const shortID = generateShortId(5, true);
     const url = req.body.url;
-
     if (!url) {
         res.status(400).json({ status: "Source URL Required" })
     }
@@ -13,7 +12,8 @@ async function handleUrlPost(req, res) {
         ShortId: shortID,
         redirectUrl: url,
     })
-    res.status(201).json({ ShortedURL: `${shortID}` })
+    res.render("home", { ShortedURL: `${shortID}` } )
+    // res.status(201).json({ ShortedURL: `${shortID}` })
 }
 
 async function handleShortedURl(req, res) {
@@ -31,6 +31,10 @@ async function handleURlClicks(req, res) {
     const urlID = req.params.urlID;
     const entry2 = await URL.findOne({ ShortId: urlID })
     res.json({ Totallicks: entry2.visitHistory.length , analytics:entry2.visitHistory })
+}
+
+async function handleHomepage(req,res){
+  
 }
 
 module.exports = {
