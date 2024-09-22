@@ -7,5 +7,4 @@ const data= await URL.find({})
   return res.render("home",{Alldata: data})
 })
 
-
 module.exports=route
