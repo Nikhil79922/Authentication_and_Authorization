@@ -11,13 +11,13 @@ const staticRoutes=require("./routes/staticRoute")
 const Valid=require("./routes/user")
 
 //Custom Middleware
-const {restrictLogedInUserOnly,checkAuth}=require("./middlewares/auth");
-
+const {CheckForAuthentication,restrictTo}=require("./middlewares/auth");
 
 //Middleware
 app.use(express.json());
 app.use(express.urlencoded({extended:false}))
 app.use(cookieParser())
+app.use(CheckForAuthentication)
 
 //ejs
 app.set("view engine","ejs")
@@ -27,9 +27,9 @@ app.set("views",path.resolve("./views"))
 connectionDB("mongodb://localhost:27017/Shortener")
 
 //Routing
-app.use("/url",restrictLogedInUserOnly,userRoutes)
-app.use("/",checkAuth,staticRoutes)
+app.use("/url",userRoutes)
 app.use("/user",Valid)
+app.use("/",staticRoutes)
 app.listen(port,()=>{
     console.log("Server is running on the port 8000")
 })

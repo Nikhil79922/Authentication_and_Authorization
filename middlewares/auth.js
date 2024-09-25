@@ -1,44 +1,63 @@
-const { getUser } =require("../Services/auth")
+const { getUser } = require("../Services/auth")
 
-async function restrictLogedInUserOnly(req,res,next){
+function CheckForAuthentication(req, res, next) {
 
-  //response method
-    const userId=req.headers['authorization'];
-    const token=userId.split("Bearer ")[1]
-
-    //cookies method
-    // const userId=req.cookies.uid;
-
-    if(!userId) return res.redirect("/Login")
-      const user=getUser(token)
-      // const user=getUser(userId)
-
-    if(!user) return res.redirect("/Login")
-    req.user=user;
-
-    next();
+  const tokenvalue = req.cookies.token;
+  req.user=null
+  if (!tokenvalue) return next()
+  const token = tokenvalue;
+  const user = getUser(token)
+  req.user = user;
+  next();
 }
 
-async function checkAuth(req,res,next){
+function restrictTo(role=[]){
+  return function(req,res,next){
+    if(!req.user){
+      return res.redirect("/Login")
+    }
+    if(!role.includes(req.user.role)){
+      return res.end("UnAuthorized ----> Only For Admin's")
+    }
 
-    //response method
-  const userId=req.headers['authorization'];
-  console.log(userId)
-const token=userId.split("Bearer ")[1]
-
-//cookies method
-    // const userId=req.cookies.uid;
-
-
-      const user=getUser(token)
-      // const user=getUser(userId)
-
-    req.user=user;
-
-    next();
+    return next()
+  }
 }
 
-module.exports={
-    restrictLogedInUserOnly,
-    checkAuth,
+// async function restrictLogedInUserOnly(req, res, next) {
+
+//   const userId = req.headers['authorization']
+//   if (!userId) return res.redirect("/Login")
+
+//   const token = userId.split("Bearer ")[1];
+//   // const userId=req.cookies.uid;
+
+//   const user = getUser(token)
+
+//   if (!user) return res.redirect("/Login")
+//   req.user = user;
+//   next();
+// }
+
+// async function checkAuth(req, res, next) {
+
+//   //Using Stateless Approach
+//   // const userId=req.cookies.uid;
+//   // const user=getUser(userId)
+
+//   //JWT Approach
+//   const userId = req.headers['authorization']
+//   if (userId) {
+//     const token = userId.split("Bearer ")[1];
+//     const user = getUser(token)
+//     req.user = user;
+//   }
+//   next();
+// }
+
+module.exports = {
+  // restrictLogedInUserOnly,
+  // checkAuth,
+  CheckForAuthentication,
+  restrictTo
 }
