@@ -11,6 +11,8 @@ async function handleUrlPost(req, res) {
     await URL.create({
         ShortId: shortID,
         redirectUrl: url,
+        visitHistory:[],
+        createdBy:req.user._id
     })
     res.render("home", { ShortedURL: `${shortID}` } )
     // res.status(201).json({ ShortedURL: `${shortID}` })
@@ -23,7 +25,6 @@ async function handleShortedURl(req, res) {
             visitHistory: { timeStamp: Date.now() }
         }
     })
-    console.log(entry)
     res.redirect(entry.redirectUrl)
 }
 
@@ -31,10 +32,6 @@ async function handleURlClicks(req, res) {
     const urlID = req.params.urlID;
     const entry2 = await URL.findOne({ ShortId: urlID })
     res.json({ Totallicks: entry2.visitHistory.length , analytics:entry2.visitHistory })
-}
-
-async function handleHomepage(req,res){
-  
 }
 
 module.exports = {

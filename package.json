@@ -10,10 +10,13 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "cookie-parser": "^1.4.6",
     "ejs": "^3.1.10",
     "express": "^4.21.0",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.6.3",
     "short-unique-id": "^5.2.0",
-    "ssid": "^0.0.7"
+    "ssid": "^0.0.7",
+    "uuid": "^10.0.0"
   }
 }
