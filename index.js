@@ -11,7 +11,7 @@ const staticRoutes=require("./routes/staticRoute")
 const Valid=require("./routes/user")
 
 //Custom Middleware
-const {CheckForAuthentication,restrictTo}=require("./middlewares/auth");
+const {CheckForAuthentication}=require("./middlewares/auth");
 
 //Middleware
 app.use(express.json());

@@ -8,12 +8,19 @@ function setUser(user) {
       _id:user._id,
       email:user.email,
       role:user.role
-    },Secret)
+    },Secret,{expiresIn:"10s"})
 
 }
 function getUser(token) {
   // return  sessionIdToUseMap.get(id);
-  return jwt.verify(token,Secret)
+  try {
+    return jwt.verify(token, Secret); // This will throw an error if the token has expired
+  } catch (err) {
+    if (err.name === "TokenExpiredError") {
+      return null; // Return null if token has expired
+    }
+    throw err; // Throw any other errors
+  }
 }
 module.exports = {
     setUser,

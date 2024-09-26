@@ -7,6 +7,10 @@ function CheckForAuthentication(req, res, next) {
   if (!tokenvalue) return next()
   const token = tokenvalue;
   const user = getUser(token)
+  if(!user){
+   res.clearCookie("token")
+    return res.status(401).redirect("/Login");
+  }
   req.user = user;
   next();
 }

@@ -6,6 +6,7 @@ const Schema= new mongoose.Schema({
     ShortId:{
         type:String,
         required:true,
+        unique:true,
     },
     redirectUrl:{
         type:String,

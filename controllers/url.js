@@ -3,7 +3,7 @@ const URL = require("../models/url")
 const generateShortId = require('ssid');
 
 async function handleUrlPost(req, res) {
-    const shortID = generateShortId(5, true);
+    const shortID = generateShortId(6, true);
     const url = req.body.url;
     if (!url) {
         res.status(400).json({ status: "Source URL Required" })
@@ -14,8 +14,10 @@ async function handleUrlPost(req, res) {
         visitHistory:[],
         createdBy:req.user._id
     })
+
     res.render("home", { ShortedURL: `${shortID}` } )
     // res.status(201).json({ ShortedURL: `${shortID}` })
+
 }
 
 async function handleShortedURl(req, res) {
