@@ -8,7 +8,7 @@ function setUser(user) {
       _id:user._id,
       email:user.email,
       role:user.role
-    },Secret,{expiresIn:"10s"})
+    },Secret,{expiresIn:"1h"})
 
 }
 function getUser(token) {

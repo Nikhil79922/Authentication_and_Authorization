@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>URL Shortener</title>
     <style>
+        body{
+            width: 100vw;
+        }
         #btn{
             background-color: #93c695;
             border-radius: 30px;
@@ -12,11 +15,9 @@
         }
         #URL{
             width: 200px;
-
         }
         #gnt{
             display: flex;
-
             align-items: center;
         }
         #heading{
@@ -29,7 +30,6 @@
         table td{
             border: 2px solid black;
             padding: 8px;
-
         }
         table th {
             border: 2px solid black;
@@ -46,9 +46,7 @@
 <% UserInfo.forEach(data => { %>
     <h1>Member :- (<%=data.role %>)</h1>
 <% }) %>
-
     <% } %>
-
     <div id="gnt">
         <% if (locals.ShortedURL) { %>
          <h3>Generated URL:- </h3> <p>http://localhost:8000/url/<%= ShortedURL %></p>
